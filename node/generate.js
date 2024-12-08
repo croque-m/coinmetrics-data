@@ -1,6 +1,7 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const path = require('path');
+const pl = require('nodejs-polars');
 
 const API_ROOT = 'https://community-api.coinmetrics.io/v4';
 const MIN_FETCH_INTERVAL = 600; // rate limit interval in ms (used only for debugging)
@@ -52,8 +53,25 @@ const apiFetch = async path => fetch(API_ROOT + path)
 	.then(res => res.data);
 
 const fsWrite = (filename, content) => {
-	filename = path.resolve(process.env.OUT, `${filename}.csv`);
-	fs.writeFileSync(filename, content);
+	let ticker = filename;
+	let oldFilename = path.resolve("../csv", `${ticker}.csv`);
+	let oldFrame = pl.readCSV(oldFilename);
+	let cols = oldFrame.columns;
+	let dtypes = oldFrame.dtypes;
+	let dtypeMap = {}
+	for (let i = 0; i < cols.length; i++) {
+		dtypeMap[cols[i]] = dtypes[i];
+	}
+	let newFrame = pl.readCSV(content, {dtypes: dtypeMap});
+	newFrame.with
+
+	let filteredOldFrame = oldFrame.filter(pl.col("time").lt(pl.col("time").max()));
+	let filteredNewFrame = newFrame.join(filteredOldFrame, {on: "time", how:"anti"});
+	let outFrame = pl.concat([filteredOldFrame, filteredNewFrame], {how: "diagonal"});
+
+	filename = path.resolve(process.env.OUT, `${ticker}.csv`);
+	// fs.writeFileSync(filename, content);
+	outFrame.writeCSV(filename)
 	emitVerbose(`Written ~${content.length} bytes to ${filename}`);
 };
 

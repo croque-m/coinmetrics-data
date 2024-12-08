@@ -1,4 +1,4 @@
-# _*BRANCHED FROM 2024-12-05 COMMIT*_
+# _*COMMUNITY EDITION API NO LONGER PULLS REFERENCE RATES*_
 
 It appears that the community API no longer pulls reference rates further back than 7 days. As such the current Coin Metrics repo has overwritten all reference rate information. The `PriceUSD` field is still available for further back than 7 days, however there are a number of large market cap coins that do not have this field. 
 
@@ -8,7 +8,7 @@ This repository is here for historical purposes under the license it was origina
 
 These data archives are produced using free Community tier of [Coin Metrics API](https://docs.coinmetrics.io/api).
 
-Scripts for data generation are in [scripts](scripts) directory.
+Scripts for data generation are in [scripts](node) directory.
 
 ## Available data
 
@@ -37,9 +37,9 @@ We will try to keep the layout and file formats of this repository stable, but t
 Example of a full local debug invocation to generate only BTC and ETH:
 
 ```shell
-yarn --cwd scripts
+yarn --cwd node
 mkdir test
-OUT=./test THROTTLE=1 VERBOSE=1 ASSETS=btc,eth node ./scripts/generate.js
+OUT=./test THROTTLE=1 VERBOSE=1 ASSETS=btc,eth node ./node/generate.js
 ```
 
 ## License
