@@ -63,14 +63,12 @@ const fsWrite = (filename, content) => {
 		dtypeMap[cols[i]] = dtypes[i];
 	}
 	let newFrame = pl.readCSV(content, {dtypes: dtypeMap});
-	newFrame.with
 
 	let filteredOldFrame = oldFrame.filter(pl.col("time").lt(pl.col("time").max()));
 	let filteredNewFrame = newFrame.join(filteredOldFrame, {on: "time", how:"anti"});
 	let outFrame = pl.concat([filteredOldFrame, filteredNewFrame], {how: "diagonal"});
 
 	filename = path.resolve(process.env.OUT, `${ticker}.csv`);
-	// fs.writeFileSync(filename, content);
 	outFrame.writeCSV(filename)
 	emitVerbose(`Written ~${content.length} bytes to ${filename}`);
 };
