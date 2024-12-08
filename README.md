@@ -1,3 +1,15 @@
+# _*COMMUNITY EDITION API NO LONGER PULLS REFERENCE RATES*_
+
+It appears that the community API no longer pulls reference rates further back than 7 days. As such the current Coin Metrics repo has overwritten all reference rate information. The `PriceUSD` field is still available for further back than 7 days, however there are a number of large market cap coins that do not have this field. 
+
+This repository is here for historical purposes under the license it was originally released under. I will likely update the current script or add a new one that instead appends to current CSVs rather than overwrites them.
+
+Checkout the last full branch with:
+
+```shell
+git checkout 60839f1935448fbd76355e160106a19b3759096f
+```
+
 # Free Coin Metrics data archives
 
 These data archives are produced using free Community tier of [Coin Metrics API](https://docs.coinmetrics.io/api).
