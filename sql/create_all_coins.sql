@@ -1,3 +1,5 @@
+drop table if exists all_coins;
+
 create table all_coins (
     ticker varchar,
     time date,
@@ -74,6 +76,7 @@ create table all_coins (
     ROI1yr float,
     ROI30d float,
     ReferenceRate float,
+    ReferenceRateBTC float,
     ReferenceRateETH float,
     ReferenceRateEUR float,
     ReferenceRateUSD float,

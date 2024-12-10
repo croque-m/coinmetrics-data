@@ -54,7 +54,7 @@ const apiFetch = async path => fetch(API_ROOT + path)
 
 const fsWrite = (filename, content) => {
 	let ticker = filename;
-	let oldFilename = path.resolve("../csv", `${ticker}.csv`);
+	let oldFilename = path.resolve("./csv", `${ticker}.csv`);
 	let oldFrame = pl.readCSV(oldFilename);
 	let cols = oldFrame.columns;
 	let dtypes = oldFrame.dtypes;
